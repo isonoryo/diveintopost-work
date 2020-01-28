@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :teams do
     member do
-      patch 'owner_change'
+      patch 'owner_change' #patchで処理が走った時に、TeamsControllerのowner_changeメソッドへ飛ぶ
     end
     resources :assigns, only: %w(create destroy)
     resources :agendas, shallow: true do

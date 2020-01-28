@@ -53,7 +53,7 @@ class TeamsController < ApplicationController
     return self.user_id == user.id
   end
 
-  def owner_change
+  def owner_change #オーナーチェンジする為のメソッド
     @user = User.find_by(id: params[:owner_change_user_id])
     if @team.update(owner: @user)
       OwnerChangeMailer.owner_change_mail(@user.email).deliver
