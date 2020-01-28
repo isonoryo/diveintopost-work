@@ -34,7 +34,7 @@
               <i class="fa fa-circle-o nav-icon"></i>
               <p>
                 <%= agenda.title %>
-                <% if current_user.id == agenda.user_id || @working_team.owner_id == current_user.id %>
+                <% if current_user.id == agenda.user_id || current_user.id == @working_team.owner_id %>
                  <object>
                    <%= link_to '削除', agenda_path(@agendas, id:agenda.id), method: :delete, class: 'btn btn-sm btn-danger' %>
                  </object>
