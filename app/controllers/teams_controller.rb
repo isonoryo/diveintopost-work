@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_team, only: %i[show edit update destroy]
+  before_action :set_team, only: %i[show edit update destroy owner_change]
   before_action :correct_user_is_owner?, only:[:edit, :update]
 
   def index
@@ -51,6 +51,16 @@ class TeamsController < ApplicationController
   def isOwned?(user)
     return false if user.nil?
     return self.user_id == user.id
+  end
+
+  def owner_change
+    @user = User.find_by(id: params[:owner_change_user_id])
+    if @team.update(owner: @user)
+      OwnerChangeMailer.owner_change_mail(@user.email).deliver
+      redirect_to team_url, notice: 'オーナー権限を移動しました。'
+    else
+      redirect_to team_url, notice: 'オーナー権限は移動できません。'
+    end
   end
 
   private
